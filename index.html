@@ -1,0 +1,88 @@
+<!doctype html>
+<html style="padding: 0; margin: 0;">
+<head>
+  <meta charset="utf-8">
+  <title>austin.lol</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="">
+  <meta property="og:type" content="">
+  <meta property="og:url" content="">
+  <meta property="og:image" content="">
+
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="apple-touch-icon" href="icon.png">
+  <!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="style.css">
+
+  <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+</head>
+<body style="margin: 0; padding: 0;">
+  <div  id="snake-window">
+  </div>
+  <!-- <p>press <span class="key-helper">space</span> to pause</p> -->
+  <div id="modal-dim" class="modal-dim hidden">
+    <p>[ paused ] <br/>
+      press <span class="key-helper">space</span> to resume
+    </p>
+  </div>
+  <div id="info-modal-social" class="info-modal py-10" style="display:none;">
+    <h2 id="info-modal-title">@ Social</h2>
+    <ul class="info-list">
+      <li>
+        <a href="https://twitter.com/austinwprice" target="_blank" class="info-link">Twitter</a>
+      </li>
+      <li>
+        <a href="https://www.linkedin.com/in/austin-price-43155a44/" target="_blank" class="info-link">LinkedIn</a>
+      </li>
+      <li>
+        <a href="https://github.com/austinprice" target="_blank" class="info-link">Github</a>
+      </li>
+      <li>
+        <a href="https://dribbble.com/austinprice" target="_blank" class="info-link">Dribbble</a>
+      </li>
+    </ul>
+    <button class="btn-close" onclick="closeInfoBox()">
+      Close <span class="key-helper">space</span>
+    </button>
+  </div>
+
+  <div id="info-modal-email" class="info-modal py-10" style="display:none;">
+    <h2 id="info-modal-title">Email</h2>
+    <ul class="info-list">
+      <li>
+        <a href="mailto:yo@austin.lol" target="_blank" class="info-link">yo@austin.lol</a>
+      </li>
+    </ul>
+    <button class="btn-close" onclick="closeInfoBox()">
+      Close <span class="key-helper">space</span>
+    </button>
+  </div>
+
+  <div id="info-modal-work" class="info-modal py-10" style="display:none;">
+    <h2 id="info-modal-title">Work</h2>
+    <ul class="info-list">
+      <li>
+        <a href="https://greynoise.io" target="_blank" class="info-link">GreyNoise [current]</a>
+        <p>Senior Product Designer</p>
+        <p>2022 - [current]</p>
+      </li>
+      <li>
+        <a href="https://krit.com" target="_blank" class="info-link">Krit</a>
+        <p>Co-founder</p>
+        <p>2014 - 2022 [acq.]</p>
+      </li>
+    </ul>
+    <button class="btn-close" onclick="closeInfoBox()">
+      Close <span class="key-helper">space</span>
+    </button>
+  </div>
+  <script src="main.js"></script>
+  <script>
+    setup()
+    drawSnake()
+  </script>
+</body>
+</html>
