@@ -309,6 +309,42 @@ function closeInfoBox() {
 window.onresize = function(){ location.reload(); }
 
 
+
+box.addEventListener('touchstart', function (event) {
+  touchstartX = event.changedTouches[0].screenX;
+  touchstartY = event.changedTouches[0].screenY;
+}, false);
+
+box.addEventListener('touchend', function (event) {
+  touchendX = event.changedTouches[0].screenX;
+  touchendY = event.changedTouches[0].screenY;
+  handleGesture();
+}, false);
+
+
+function handleGesture() {
+  let dir = direction;
+  let axis = 'x';
+  const touchDifX = touchendX - touchstartX;
+  const touchDifY = touchendY - touchstartY;
+  let newDir = dir;
+
+
+  if (Math.abs(touchDifY) > Math.abs(touchDifX)) axis = 'y';
+
+  if (axis == 'x') {
+    newDir = RIGHT;
+    if (touchDifX < 0) newDir = LEFT;
+  }
+  if (axis == 'y') {
+    newDir = DOWN;
+    if (touchDifY < 0) newDir = UP;
+  }
+
+  changeDirection(newDir);
+}
+
+
 // TODO:
 // [x] add protection for snake running into itself
 // [ ] open/show infobox details when one is hit
