@@ -84,7 +84,6 @@ a:focus::before, a:hover::before {
   padding: 0;
   width: 90vw;
   height: 80vh;
-  box-sizing: border-box;
   position: relative;
   overflow: hidden;
 } 
@@ -226,5 +225,14 @@ ul.info-list li p {
   100% {
     opacity: 0.3;
     transform: scale(0.95);
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  #snake-window {
+    margin: 10px auto;
+    padding: 0;
+    width: calc(100vw - 20px);
+    height: calc(100vh - 20px);
   }
 }

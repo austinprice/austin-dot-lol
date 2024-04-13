@@ -308,7 +308,9 @@ function closeInfoBox() {
 
 window.onresize = function(){ location.reload(); }
 
-
+box.addEventListener('touchmove', function(e) {
+  e.preventDefault();
+})
 
 box.addEventListener('touchstart', function (event) {
   touchstartX = event.changedTouches[0].screenX;
