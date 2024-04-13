@@ -2,15 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Styling Ideas
+- white/light gray
+- black/dark gray
+- fun animation when you hit a square */
+
 @font-face {
   font-family: "Space Mono";
-  src: url("/fonts/SpaceMono-Regular.ttf");
+  src: url("./fonts/SpaceMono-Regular.ttf");
 }
 
 html, body {
   font-family: "Space Mono";
-  background-color: hsl(240, 2%, 4%);
-  color: #fff;
+  background-color: hsl(47, 19%, 85%);
+  color: hsl(64, 27%, 10%);
   font-size: 14px;
   max-height: 100vh;
 }
@@ -56,8 +61,8 @@ a:focus::before, a:hover::before {
   background: hsla(140, 100%, 60%, 10%);
 }
 .key-helper {
-  background: black;
-  color: hsl(240, 2%, 60%);
+  background: hsl(47, 19%, 75%);
+  color: hsl(47, 19%, 20%);
   display: inline-block;
   font-size: 0.8rem;
   letter-spacing: 2px;
@@ -67,38 +72,62 @@ a:focus::before, a:hover::before {
 }
 
 #snake-window {
-  background-color: black;
-  border: 1px solid hsl(240, 2%, 15%);
-  margin: calc(50vh - 200px) auto;
+  background-color: hsl(47, 10%, 85%);
+  /* border: 1px solid hsl(65, 10%, 8%); */
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin: 10vh auto;
   padding: 0;
-  width: 400px;
-  height: 400px;
+  width: 90vw;
+  height: 80vh;
   box-sizing: border-box;
   position: relative;
+  overflow: hidden;
 } 
+
+#dot-grid {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 0;
+}
+.dot-row {
+  position: absolute;
+}
+.grid-dot {
+  background-color: hsl(65, 10%, 80%);
+  border: 2px solid hsl(65, 10%, 85%);
+  border-radius: 50%;
+  position: absolute;
+  box-sizing: border-box;
+}
 
 .segment {
   position: absolute;
   min-width: 10px;
   min-height: 10px;
-  background: hsl(140, 100%, 60%);
-  border: 2px solid hsl(240, 2%, 4%);
+  background: hsl(65, 10%, 30%);
+  border: 2px solid hsl(65, 10%, 90%);
   box-sizing: border-box;
-  border-radius: 0px;
-  box-shadow: 0px 0px 4px hsla(140, 100%, 60%, 20%);
+  border-radius: 50%;
+  /* box-shadow: 0px 0px 4px hsla(140, 100%, 60%, 20%); */
 }
 
 .info-box {
   position: absolute;
-  background: rgb(0, 255, 89);
+  background: hsl(140, 100%, 36%);
+  border-radius: 50%;
+  border: 2px solid hsl(65, 10%, 90%);
   box-sizing: border-box;
-  border-radius: 0px;
   cursor: pointer;
-  /* border: 1px solid hsla(141, 66%, 50%, 50%); */
-  box-shadow: 0px 0px 30px hsla(140, 100%, 60%, 30%);
-  animation-duration: 3s;
+  min-width: 10px;
+  min-height: 10px;
+  /* box-shadow: 1px 1px 0px hsl(140, 77%, 56%); */
+  /* animation-duration: 3s;
   animation-name: infoBox;
-  animation-iteration-count: infinite;
+  animation-iteration-count: infinite; */
   transition: 1s ease-out;
 }
 .info-box:hover {
@@ -106,12 +135,11 @@ a:focus::before, a:hover::before {
 }
 
 .info-modal {
-  background: hsla(140, 100%, 3%, 85%);
-  backdrop-filter: blur(4px);
-  box-shadow: 0px 0px 80px hsla(140, 100%, 60%, 20%);
+  background: hsl(65, 10%, 95%);
+  box-shadow: 8px 8px 0px hsl(140, 77%, 56%);
   position: absolute;
-  border: 1px solid hsla(140, 100%, 30%, 50%);
-  border-radius: 0px;
+  border: 1px solid hsl(240, 2%, 4%);
+  border-radius: 2px;
   width: 300px;
   max-width: 95%;
   padding: 0.75rem 2rem 1.25rem;
@@ -126,11 +154,10 @@ a:focus::before, a:hover::before {
   z-index: 99;
 }
 #info-modal-title {
-  color: hsl(140, 30%, 30%);
-  font-weight: 400;
-  letter-spacing: 0.5rem;
+  color: hsl(240, 2%, 4%);
+  font-weight: 600;
   font-family: sans-serif;
-  text-transform: uppercase;
+  font-size: 1.5rem;
 }
 ul.info-list {
   list-style: none;
@@ -147,7 +174,7 @@ ul.info-list li p {
 
 .modal-dim {
   position: fixed;
-  background: rgba(0,0,0,0.5);
+  background: hsla(47, 19%, 85%, 0.5);
   width: 100%;
   height: 100%;
   top: 0;
@@ -156,6 +183,7 @@ ul.info-list li p {
   transition: ease-out;
   transition-duration: 500ms;
   z-index: -1;
+  backdrop-filter: blur(2px);
 }
 .modal-dim p {
   display: inline-block;
@@ -170,7 +198,7 @@ ul.info-list li p {
 .hidden {
   opacity: 0;
 }
-#social:before{
+/* #social:before{
   content: '@';
   position: absolute;
   font-family: sans-serif;
@@ -179,7 +207,7 @@ ul.info-list li p {
   left: 50%;
   top: 50%;
   transform: translateX(-50%) translateY(-50%);
-}
+} */
 
 
 @keyframes infoBox {
