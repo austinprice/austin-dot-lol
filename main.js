@@ -9,7 +9,7 @@ const box = document.getElementById('snake-window');
 const scale = 12;
 const boxWidth = box.getBoundingClientRect().width;
 const boxHeight = box.getBoundingClientRect().height;
-const speed = 80;
+const speed = 60;
 
 let direction = RIGHT;
 
@@ -306,12 +306,15 @@ function closeInfoBox() {
   }
 }
 
+window.onresize = function(){ location.reload(); }
+
 
 // TODO:
 // [x] add protection for snake running into itself
 // [ ] open/show infobox details when one is hit
-// [ ] remove infobox from overlap logic once it's been removed from dom
-// [ ] update pause screen
+// [x] remove infobox from overlap logic once it's been removed from dom
+// [x] update pause screen
 // [ ] add intro animation and explainer on pause screen
+// [ ] show top bar with corresponding infobox items, will be enabled when the dot is eaten
 // [ ] update UI design
 // [ ] mobile gestures
