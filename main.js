@@ -31,28 +31,31 @@ let infoBoxes = [{
   x: getRandomPlacement(boxWidth),
   y: getRandomPlacement(boxHeight),
   color: 'hsl(140, 100%, 36%)',
-  size: 1
+  size: 1,
+  hidden: true,
 }, {
   id: 'email',
   title: 'Email',
   x: getRandomPlacement(boxWidth),
   y: getRandomPlacement(boxHeight),
   color: 'hsl(140, 100%, 36%)',
-  size: 1
+  size: 1,
+  hidden: true
 }, {
   id: 'work',
   title: 'Work',
   x: getRandomPlacement(boxWidth),
   y: getRandomPlacement(boxHeight),
   color: 'hsl(140, 100%, 36%)',
-  size: 1
+  size: 1,
+  hidden: true
 }];
 let selectedInfoBox = null;
 let ignoreInfoBox = false;
 
 function getRandomPlacement(axis) {
-  const dotCount = (axis / scale);
-  return Math.floor(Math.random() * dotCount) * scale;
+  const dotCount = Math.floor(axis / scale);
+  return Math.floor(Math.random() * dotCount);
 }
 
 function setup() {
@@ -60,15 +63,16 @@ function setup() {
 
   for (let i = 0; i < snakeLength; i++) {
     let xPos = xStart;
-    if (i > 0) xPos = xStart - (scale * i)
+    if (i > 0) xPos = xStart - i;
     snake.push({
       x: xPos,
       y: yStart,
     })
   }
 
-  infoBoxes.forEach(drawInfoBox);
+  
   drawGridY();
+  drawInfoBox(infoBoxes[0]);
 
   turnQueue = snake.map(() => direction)
   getRandomPlacement()
@@ -97,18 +101,15 @@ function drawGridY() {
   for(let i = 1; i <= dotCount; i++) drawGridX((i * scale) - scale);
 }
 
-function drawInfoBox(infoBox) {
-  let infoBoxDiv = document.createElement('div');
-  const size = (infoBox.size * scale) + 'px';
+function drawInfoBox(infoBox) {  
+  infoBox.hidden = false;
+  let gridRow = document.getElementsByClassName('dot-row')[infoBox.y];
+  let infoBoxDiv = gridRow.getElementsByClassName('grid-dot')[infoBox.x];
+
   infoBoxDiv.classList.add('info-box');
   infoBoxDiv.id = infoBox.id
-  infoBoxDiv.style.width = size;
-  infoBoxDiv.style.height = size;
-  infoBoxDiv.style.left = infoBox.x + 'px';
-  infoBoxDiv.style.top = infoBox.y + 'px';
   infoBoxDiv.style.backgroundColor = infoBox.color;
   infoBoxDiv.addEventListener('click', function() {openInfoBox(infoBox) })
-  box.appendChild(infoBoxDiv)
 }
 
 function onKeyDown(e) {
@@ -172,27 +173,30 @@ function drawSnake() {
 }
 
 function drawSegment(segment) {
-  let segmentDiv = document.createElement('div');
-  segmentDiv.classList.add('segment');
-  segmentDiv.style.width = scale + 'px';
-  segmentDiv.style.height = scale + 'px';
-  segmentDiv.style.left = segment.x + 'px';
-  segmentDiv.style.top = segment.y + 'px';
-  if(segment.color) segmentDiv.style.backgroundColor = segment.color;
-  box.appendChild(segmentDiv)
+  let gridRow = document.getElementsByClassName('dot-row')[segment.y];
+  let segmentDiv = gridRow.getElementsByClassName('grid-dot')[segment.x];
+
+  if (segmentDiv) {
+    segmentDiv.classList.add('segment');
+    if(segment.color) segmentDiv.style.backgroundColor = segment.color;
+  } else {
+    console.log(segment)
+    console.log(gridRow)
+  }
 }
 
 function clearSnake() {
   const segments = document.querySelectorAll('.segment');
-  segments.forEach(segment => segment.remove())
+  segments.forEach(segment => {
+    segment.style.backgroundColor = null;
+    segment.classList.remove('segment')
+  })
 }
 
 function checkOverlap(item) {
   const head = snake[0];
-  const headX = head.x + scale;
-  const headY = head.y + scale;
-  const xOverlap = item.x < headX && head.x < (item.x + scale);
-  const yOverlap = item.y < headY && head.y < (item.y + scale);
+  const xOverlap = item.x == head.x;
+  const yOverlap = item.y == head.y;
   return xOverlap && yOverlap;
 }
 
@@ -213,13 +217,9 @@ function moveSnake() {
   }) 
 
   infoBoxes.forEach((infoBox, index) => {
-    // const headX = head.x + scale;
-    // const headY = head.y + scale;
-    // const xOverlap = infoBox.x < headX && head.x < (infoBox.x + (infoBox.size * scale));
-    // const yOverlap = infoBox.y < headY && head.y < (infoBox.y + (infoBox.size * scale));
     overlap = checkOverlap(infoBox)
 
-    if (overlap && !ignoreInfoBox) {
+    if (overlap && !ignoreInfoBox && !infoBox.hidden) {
       // openInfoBox(infoBox)
       addSegment(infoBox.color);
 
@@ -227,7 +227,14 @@ function moveSnake() {
       snakeLength ++;
       turnQueue.push(newSegmentDir);
 
-      document.getElementById(infoBox.id).remove();
+      document.getElementById(infoBox.id).classList.remove('info-box');
+      infoBox.hidden = true;
+
+      let nextInfoBoxIndex = index + 1;
+      if (infoBoxes.length > nextInfoBoxIndex) {
+        infoBoxes[nextInfoBoxIndex].hidden = false;
+        drawInfoBox(infoBoxes[nextInfoBoxIndex]);
+      }
     }
     if (ignoreInfoBox) ignoreInfoBox = false
   })
@@ -236,10 +243,31 @@ function moveSnake() {
   drawSnake();
 }
 
+function moveSegment(segment, index) {
+  let axis = 'x';
+  let amount = 1;
+  let boxSize = boxWidth;
+  let dir = turnQueue[index];
+  let gridDotsLength = document.getElementsByClassName('dot-row')[0].getElementsByClassName('grid-dot').length;
+
+  if (dir === UP || dir === DOWN) {
+    axis = 'y';
+    gridDotsLength = document.getElementsByClassName('dot-row').length;
+  }
+  if (dir === LEFT || dir === UP) amount = -1;
+  let newPosition = segment[axis] + amount;
+
+  // if the snake goes outside of the playing area, move it to the other side
+  if (amount > 0 && newPosition > (gridDotsLength - 1)) newPosition = 0;
+  if (amount < 0 && newPosition < 0) newPosition = gridDotsLength - 1;
+
+  segment[axis] = newPosition;
+}
+
 function addSegment(color) {
   let lastSegment = snake[snake.length - 1];
   let dir = turnQueue[(snakeLength - 1)];
-  let amount = scale * -1;
+  let amount = -1;
   let axis = 'x';
   
   let newSegment = {
@@ -278,26 +306,6 @@ function closeInfoBox() {
   }
 }
 
-function moveSegment(segment, index) {
-  let axis = 'x';
-  let amount = scale;
-  let boxSize = boxWidth;
-  let dir = turnQueue[index]
-
-  if (dir === UP || dir === DOWN) {
-    axis = 'y';
-    boxSize = boxHeight;
-  }
-  if (dir === LEFT || dir === UP) amount = amount * -1;
-  let newPosition = segment[axis] + amount;
-
-  // if the snake goes outside of the playing area, move it to the other side
-  if (amount > 0 && newPosition > (boxSize - scale)) newPosition = 0;
-  if (amount < 0 && newPosition < 0) newPosition = (boxSize - scale);
-
-  segment[axis] = newPosition;
-}
-
 
 // TODO:
 // [x] add protection for snake running into itself
@@ -306,3 +314,4 @@ function moveSegment(segment, index) {
 // [ ] update pause screen
 // [ ] add intro animation and explainer on pause screen
 // [ ] update UI design
+// [ ] mobile gestures

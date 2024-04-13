@@ -7,6 +7,10 @@
 - black/dark gray
 - fun animation when you hit a square */
 
+:root {
+  --window-bg: hsl(47, 19%, 85%);
+}
+
 @font-face {
   font-family: "Space Mono";
   src: url("./fonts/SpaceMono-Regular.ttf");
@@ -14,7 +18,7 @@
 
 html, body {
   font-family: "Space Mono";
-  background-color: hsl(47, 19%, 85%);
+  background-color: var(--window-bg);
   color: hsl(64, 27%, 10%);
   font-size: 14px;
   max-height: 100vh;
@@ -72,7 +76,7 @@ a:focus::before, a:hover::before {
 }
 
 #snake-window {
-  background-color: hsl(47, 10%, 85%);
+  background-color: var(--window-bg);
   /* border: 1px solid hsl(65, 10%, 8%); */
   border-radius: 4px;
   box-sizing: border-box;
@@ -98,32 +102,32 @@ a:focus::before, a:hover::before {
 }
 .grid-dot {
   background-color: hsl(65, 10%, 80%);
-  border: 2px solid hsl(65, 10%, 85%);
+  border: 2px solid var(--window-bg);
   border-radius: 50%;
   position: absolute;
   box-sizing: border-box;
 }
 
 .segment {
-  position: absolute;
+  /* position: absolute;
   min-width: 10px;
-  min-height: 10px;
+  min-height: 10px; */
   background: hsl(65, 10%, 30%);
-  border: 2px solid hsl(65, 10%, 90%);
+  /* border: 2px solid var(--window-bg);
   box-sizing: border-box;
-  border-radius: 50%;
+  border-radius: 50%; */
   /* box-shadow: 0px 0px 4px hsla(140, 100%, 60%, 20%); */
 }
 
 .info-box {
-  position: absolute;
+  /* position: absolute; */
   background: hsl(140, 100%, 36%);
-  border-radius: 50%;
-  border: 2px solid hsl(65, 10%, 90%);
-  box-sizing: border-box;
+  /* border-radius: 50%;
+  border: 2px solid var(--window-bg);
+  box-sizing: border-box; */
   cursor: pointer;
-  min-width: 10px;
-  min-height: 10px;
+  /* min-width: 10px;
+  min-height: 10px; */
   /* box-shadow: 1px 1px 0px hsl(140, 77%, 56%); */
   /* animation-duration: 3s;
   animation-name: infoBox;
