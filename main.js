@@ -9,11 +9,14 @@ const box = document.getElementById('snake-window');
 const scale = 12;
 const boxWidth = box.getBoundingClientRect().width;
 const boxHeight = box.getBoundingClientRect().height;
-const speed = 60;
+const speed = 70;
+
+const modalDim = document.getElementById('modal-dim');
+const pauseScreen = document.getElementById('pause-screen');
 
 let direction = RIGHT;
 
-let snakeLength = 10;
+let snakeLength = 3;
 const xStart = getRandomPlacement(boxWidth);
 const yStart = getRandomPlacement(boxHeight);
 
@@ -25,12 +28,20 @@ const segmentHeadHTML = '<div class="segment" id="head"></div>';
 const segmentHTML = '<div class="segment"></div>';
 let paused = false;
 
+const colorStyles = {
+  windowBg: "hsl(47, 19%, 85%)",
+  light: "hsl(0, 0%, 85%)",
+  mid: "hsl(0, 0%, 65%)",
+  dark: "hsl(0, 100%, 0%)",
+  color: "hsl(22, 100%, 52%)",
+}
+
 let infoBoxes = [{
   id: 'social',
   title: 'Socials',
   x: getRandomPlacement(boxWidth),
   y: getRandomPlacement(boxHeight),
-  color: 'hsl(140, 100%, 36%)',
+  color: colorStyles.color,
   size: 1,
   hidden: true,
 }, {
@@ -38,7 +49,7 @@ let infoBoxes = [{
   title: 'Email',
   x: getRandomPlacement(boxWidth),
   y: getRandomPlacement(boxHeight),
-  color: 'hsl(140, 100%, 36%)',
+  color: colorStyles.color,
   size: 1,
   hidden: true
 }, {
@@ -46,7 +57,7 @@ let infoBoxes = [{
   title: 'Work',
   x: getRandomPlacement(boxWidth),
   y: getRandomPlacement(boxHeight),
-  color: 'hsl(140, 100%, 36%)',
+  color: colorStyles.color,
   size: 1,
   hidden: true
 }];
@@ -69,13 +80,14 @@ function setup() {
       y: yStart,
     })
   }
-
   
   drawGridY();
   drawInfoBox(infoBoxes[0]);
 
-  turnQueue = snake.map(() => direction)
-  getRandomPlacement()
+  turnQueue = snake.map(() => direction);
+  getRandomPlacement();
+
+  togglePause();
 }
 
 function drawGridX(yValue) {
@@ -157,14 +169,16 @@ function togglePause(e) {
   if (e && e.keyCode !== PAUSE || selectedInfoBox) return;
   paused = !paused;
   if (paused) {
-    document.getElementById('modal-dim').style.opacity = 1;
-    document.getElementById('modal-dim').style.zIndex = 1;
+    modalDim.style.opacity = 1;
+    modalDim.style.zIndex = 1;
+    pauseScreen.classList.add("is-paused");
   }
   if (!paused) {
-    document.getElementById('modal-dim').style.opacity = 0;
-    document.getElementById('modal-dim').style.zIndex = -1;
+    modalDim.style.opacity = 0;
+    modalDim.style.zIndex = -1;
+    pauseScreen.classList.remove("is-paused");
     moveSnake();
-  } 
+  }
 }
 
 function drawSnake() {

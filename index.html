@@ -20,17 +20,51 @@
   <!-- <script src="https://cdn.tailwindcss.com"></script> -->
 </head>
 <body style="margin: 0; padding: 0;">
+  <div class="top-row">
+    <div class="site-name">Austin <span class="text-colored">Price</span></div>
+    <ul class="info-buttons">
+      <li>
+        <button>Social</button>
+      </li>
+      <li>
+        <button>Work</button>
+      </li>
+      <li>
+        <button>About</button>
+      </li>
+      <li>
+        <button>Contact</button>
+      </li>
+    </ul>
+  </div>
   <div  id="snake-window">
     <div id="dot-grid"></div>
   </div>
   <!-- <p>press <span class="key-helper">space</span> to pause</p> -->
   <div id="modal-dim" class="modal-dim hidden">
-    <p>[ paused ] <br/>
+  </div>
+  <div id="pause-screen">
+    <div id="welcome">
+      <h1>Let's a play game</h1>
+      <p>To learn more about me, you must play a game of Snake.</p>
+      <p>Collect the <span class="info-box-dot"></span> dots to unlock sections of information.</p>
+      <p>Use the <span class="key-helper">↑</span><span class="key-helper">↓</span><span class="key-helper">←</span><span class="key-helper">→</span> arrow keys to move the snake.</p>
+      <p>Press <span class="key-helper">space</span> to pause anytime.</p>
+      <!-- <div class="instructions">
+        <h2>Instructions</h2>
+        <p>Collect the <span class="info-box-dot"></span> dots to learn more about me.</p>
+        <p>Use the <span class="key-helper">↑</span><span class="key-helper">↓</span><span class="key-helper">←</span><span class="key-helper">→</span> arrow keys to move the snake.</p>
+        <p>Press <span class="key-helper">space</span> to pause anytime.</p>
+      </div> -->
+      <br/>
+      <button class="btn-primary">Play <span class="key-helper">space</span></button>
+    </div>
+    <!-- <p>[ paused ] <br/>
       press <span class="key-helper">space</span> to resume
-    </p>
+    </p> -->
   </div>
   <div id="info-modal-social" class="info-modal py-10" style="display:none;">
-    <h2 id="info-modal-title">Social   @</h2>
+    <h2 id="info-modal-title">Social</h2>
     <ul class="info-list">
       <li>
         <a href="https://twitter.com/austinwprice" target="_blank" class="info-link">Twitter</a>

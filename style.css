@@ -8,7 +8,11 @@
 - fun animation when you hit a square */
 
 :root {
-  --window-bg: hsl(47, 19%, 85%);
+  --window-bg: hsl(22, 0%, 96%);
+  --light: hsl(22, 0%, 90%);
+  --mid: hsl(22, 0%, 50%);
+  --dark: hsl(22, 0%, 0%);
+  --color: hsl(22, 100%, 52%);
 }
 
 @font-face {
@@ -16,33 +20,70 @@
   src: url("./fonts/SpaceMono-Regular.ttf");
 }
 
+*{
+  font-family: "Space Mono";
+}
+
 html, body {
   font-family: "Space Mono";
   background-color: var(--window-bg);
-  color: hsl(64, 27%, 10%);
+  color: var(--dark);
   font-size: 14px;
   max-height: 100vh;
 }
 
 a {
-  color: #FFF;
+  color: var(--dark);
   padding: 0 0.1rem;
-  text-underline-offset: 2px;
+  text-decoration: underline;
+  text-underline-offset: 1px;
   transition: 300ms ease-out;
 }
 a:hover, a:focus {
-  background-color: hsla(140, 100%, 60%, 10%);
-  color: hsl(140, 100%, 50%);
+  color: var(--color);
+  text-decoration: underline;
   text-underline-offset: 2px;
-  padding-left: 1rem;
-  position: relative;
 }
 
-a:focus::before, a:hover::before {
+/* a:focus::before, a:hover::before {
   content: '>';
   position: absolute;
   left: 0;
   top: 0;
+} */
+
+.key-helper {
+  background: hsla(22, 0%, 0%, 0.1);
+  border-radius: 0.35em;
+  display: inline-block;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  margin: 0 0 0 0.25rem;
+  padding: 0.25em 0.65em;
+}
+
+/* basic reset of button styles */
+button {
+  border: none;
+  border-radius: 0.45em;
+  margin: 0;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  line-height: normal;
+  -webkit-font-smoothing: inherit;
+  -moz-osx-font-smoothing: inherit;
+  -webkit-appearance: none;
+}
+
+.btn-primary {
+  background: var(--dark);
+  color: var(--light);
+  font-size: 1.1rem;
+  padding: 0.75rem 1.5rem;
+}
+.btn-primary .key-helper {
+  background: hsla(22, 0%, 100%, 0.2)
 }
 
 .btn-close {
@@ -51,9 +92,9 @@ a:focus::before, a:hover::before {
   padding: 0.5rem 1rem;
   width: auto;
   overflow: visible;
-  background: hsl(240, 2%, 10%);
+  background: var(--light);
   cursor: pointer;
-  color: inherit;
+  color: var(--dark);
   font: inherit;
   line-height: normal;
   -webkit-font-smoothing: inherit;
@@ -62,17 +103,35 @@ a:focus::before, a:hover::before {
   transition: all 300ms ease-out;
 }
 .btn-close:hover {
-  background: hsla(140, 100%, 60%, 10%);
+  background: var(--mid);
 }
-.key-helper {
-  background: hsl(47, 19%, 75%);
-  color: hsl(47, 19%, 20%);
-  display: inline-block;
-  font-size: 0.8rem;
-  letter-spacing: 2px;
-  margin: 0 0 0 0.25rem;
-  padding: 0rem 0.25rem;
-  text-transform: uppercase;
+
+.text-colored {
+  color: var(--color);
+}
+.top-row {
+  padding: 1.5rem 5vw;
+  /* margin: 1.5rem 0 0; */
+  display: flex;
+  flex-direction: row;
+  column-gap: 8px;
+  justify-content: space-between;
+  width: 100%;
+  box-sizing: border-box;
+}
+.site-name {
+  color: var(--dark);
+  display: inline-flex;
+  align-items: center;
+  font-weight: 600;
+}
+.info-buttons {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  column-gap: 8px;
+  justify-content: end;
+  margin: 0;
 }
 
 #snake-window {
@@ -80,12 +139,13 @@ a:focus::before, a:hover::before {
   /* border: 1px solid hsl(65, 10%, 8%); */
   border-radius: 4px;
   box-sizing: border-box;
-  margin: 10vh auto;
+  top: 10vh;
+  left: 5vw;
   padding: 0;
   width: 90vw;
   height: 80vh;
-  position: relative;
   overflow: hidden;
+  position: absolute;
 } 
 
 #dot-grid {
@@ -100,7 +160,7 @@ a:focus::before, a:hover::before {
   position: absolute;
 }
 .grid-dot {
-  background-color: hsl(65, 10%, 80%);
+  background-color: var(--light);
   border: 2px solid var(--window-bg);
   border-radius: 50%;
   position: absolute;
@@ -111,7 +171,7 @@ a:focus::before, a:hover::before {
   /* position: absolute;
   min-width: 10px;
   min-height: 10px; */
-  background: hsl(65, 10%, 30%);
+  background: var(--mid);
   /* border: 2px solid var(--window-bg);
   box-sizing: border-box;
   border-radius: 50%; */
@@ -120,7 +180,7 @@ a:focus::before, a:hover::before {
 
 .info-box {
   /* position: absolute; */
-  background: hsl(140, 100%, 36%);
+  background: var(--color);
   /* border-radius: 50%;
   border: 2px solid var(--window-bg);
   box-sizing: border-box; */
@@ -134,14 +194,22 @@ a:focus::before, a:hover::before {
   transition: 1s ease-out;
 }
 .info-box:hover {
-  background: hsla(141, 100%, 15%);
+  background: var(--color);
+}
+
+.info-box-dot {
+  background: var(--color);
+  border-radius: 50%;
+  display: inline-block;
+  height: 10px;
+  width: 10px;
 }
 
 .info-modal {
-  background: hsl(65, 10%, 95%);
-  box-shadow: 8px 8px 0px hsl(140, 77%, 56%);
+  background: var(--window-bg);
+  box-shadow: 8px 8px 0px var(--color);
   position: absolute;
-  border: 1px solid hsl(240, 2%, 4%);
+  border: none;
   border-radius: 2px;
   width: 300px;
   max-width: 95%;
@@ -157,7 +225,7 @@ a:focus::before, a:hover::before {
   z-index: 99;
 }
 #info-modal-title {
-  color: hsl(240, 2%, 4%);
+  color: var(--dark);
   font-weight: 600;
   font-family: sans-serif;
   font-size: 1.5rem;
@@ -175,9 +243,29 @@ ul.info-list li p {
   margin: 0;
 }
 
+#pause-screen {
+  /* display: none; */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  padding: 2rem;
+  width: 40rem;
+  opacity: 0;
+  max-width: 80vw;
+  visibility: hidden;
+  transition: 300ms ease-out;
+  z-index: 2;
+}
+#pause-screen.is-paused {
+  opacity: 1;
+  visibility: visible;
+  z-index: 2;
+}
+
 .modal-dim {
   position: fixed;
-  background: hsla(47, 19%, 85%, 0.5);
+  background: hsla(22, 0%, 100%, 0.5);
   width: 100%;
   height: 100%;
   top: 0;
