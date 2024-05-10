@@ -121,7 +121,10 @@ function drawInfoBox(infoBox) {
   infoBoxDiv.classList.add('info-box');
   infoBoxDiv.id = infoBox.id
   infoBoxDiv.style.backgroundColor = infoBox.color;
-  infoBoxDiv.addEventListener('click', function() {openInfoBox(infoBox) })
+  // infoBoxDiv.addEventListener('click', function() {openInfoBox(infoBox) })
+  
+  const btnClass = 'btn-' + infoBox.id;
+  document.getElementById(btnClass).classList.add("highlight");
 }
 
 function onKeyDown(e) {
@@ -166,19 +169,38 @@ function oppositeDir(dir) {
 }
 
 function togglePause(e) {
-  if (e && e.keyCode !== PAUSE || selectedInfoBox) return;
+  if (e && e.keyCode !== PAUSE) return;
+  
   paused = !paused;
+  
+  let contentArea = pauseScreen;
+  if (selectedInfoBox) {
+    const infoBoxDivId = 'info-modal-' + selectedInfoBox.id;
+    contentArea = document.getElementById(infoBoxDivId);
+  }
   if (paused) {
     modalDim.style.opacity = 1;
     modalDim.style.zIndex = 1;
-    pauseScreen.classList.add("is-paused");
+    contentArea.classList.add("is-paused");
   }
   if (!paused) {
     modalDim.style.opacity = 0;
     modalDim.style.zIndex = -1;
-    pauseScreen.classList.remove("is-paused");
+    contentArea.classList.remove("is-paused");
+    if (selectedInfoBox) closeInfoBox();
     moveSnake();
   }
+}
+
+function unlockInfoBox(infoBox) {
+  document.getElementById(infoBox.id).classList.remove('info-box');
+  const btnClass = "btn-" + infoBox.id;
+  const infoBoxBtn = document.getElementById(btnClass);
+  infoBoxBtn.disabled = false;
+  infoBoxBtn.classList.remove("highlight");
+  infoBox.hidden = true;
+
+  infoBoxBtn.addEventListener('click', function() {openInfoBox(infoBox) })
 }
 
 function drawSnake() {
@@ -241,8 +263,7 @@ function moveSnake() {
       snakeLength ++;
       turnQueue.push(newSegmentDir);
 
-      document.getElementById(infoBox.id).classList.remove('info-box');
-      infoBox.hidden = true;
+      unlockInfoBox(infoBox);
 
       let nextInfoBoxIndex = index + 1;
       if (infoBoxes.length > nextInfoBoxIndex) {
@@ -299,10 +320,12 @@ function addSegment(color) {
 }
 
 function openInfoBox(infoBox) {
-  togglePause()
   selectedInfoBox = infoBox;
-  const infoBoxDivId = 'info-modal-' + infoBox.id
-  document.getElementById(infoBoxDivId).style.display = 'block';
+  togglePause();
+  // modalDim.style.opacity = 1;
+  // modalDim.style.zIndex = 1;
+  // const infoBoxDivId = 'info-modal-' + infoBox.id
+  // document.getElementById(infoBoxDivId).classList.add("is-paused");
 }
 
 function escInfoBox(e) {
@@ -312,11 +335,9 @@ function escInfoBox(e) {
 
 function closeInfoBox() {
   if (selectedInfoBox) {
-    const infoBoxDivId = 'info-modal-' + selectedInfoBox.id
-    document.getElementById(infoBoxDivId).style.display = 'none';
+    const infoBoxDivId = 'info-modal-' + selectedInfoBox.id;
+    // togglePause();
     selectedInfoBox = null;
-    ignoreInfoBox = true
-    togglePause()
   }
 }
 
@@ -368,5 +389,5 @@ function handleGesture() {
 // [x] update pause screen
 // [ ] add intro animation and explainer on pause screen
 // [ ] show top bar with corresponding infobox items, will be enabled when the dot is eaten
-// [ ] update UI design
-// [ ] mobile gestures
+// [x] update UI design
+// [x] mobile gestures

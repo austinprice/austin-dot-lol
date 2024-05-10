@@ -24,16 +24,16 @@
     <div class="site-name">Austin <span class="text-colored">Price</span></div>
     <ul class="info-buttons">
       <li>
-        <button>Social</button>
+        <button id="btn-social" class="btn-info" disabled>Social</button>
       </li>
       <li>
-        <button>Work</button>
+        <button id="btn-work" class="btn-info" disabled>Work</button>
       </li>
       <li>
-        <button>About</button>
+        <button id="btn-social" class="btn-info" disabled>About</button>
       </li>
       <li>
-        <button>Contact</button>
+        <button id="btn-email" class="btn-info" disabled>Contact</button>
       </li>
     </ul>
   </div>
@@ -43,7 +43,7 @@
   <!-- <p>press <span class="key-helper">space</span> to pause</p> -->
   <div id="modal-dim" class="modal-dim hidden">
   </div>
-  <div id="pause-screen">
+  <div id="pause-screen" class="pause-screen">
     <div id="welcome">
       <h1>Let's a play game</h1>
       <p>To learn more about me, you must play a game of Snake.</p>
@@ -63,24 +63,28 @@
       press <span class="key-helper">space</span> to resume
     </p> -->
   </div>
-  <div id="info-modal-social" class="info-modal py-10" style="display:none;">
-    <h2 id="info-modal-title">Social</h2>
+  <div id="info-modal-social" class="pause-screen">
+    <h2>Social</h2>
+    <p>Where to find across the World Wide Web.</p>
     <ul class="info-list">
       <li>
-        <a href="https://twitter.com/austinwprice" target="_blank" class="info-link">Twitter</a>
+        <a href="https://read.cv/pricey" target="_blank">Read.cv</a>
       </li>
       <li>
-        <a href="https://www.linkedin.com/in/austin-price-43155a44/" target="_blank" class="info-link">LinkedIn</a>
+        <a href="https://twitter.com/austinwprice" target="_blank">Twitter</a>
       </li>
       <li>
-        <a href="https://github.com/austinprice" target="_blank" class="info-link">Github</a>
+        <a href="https://www.linkedin.com/in/austin-price-43155a44/" target="_blank">LinkedIn</a>
       </li>
       <li>
-        <a href="https://dribbble.com/austinprice" target="_blank" class="info-link">Dribbble</a>
+        <a href="https://github.com/austinprice" target="_blank">Github</a>
+      </li>
+      <li>
+        <a href="https://dribbble.com/austinprice" target="_blank">Dribbble</a>
       </li>
     </ul>
     <button class="btn-close" onclick="closeInfoBox()">
-      Close <span class="key-helper">space</span>
+      Resume <span class="key-helper">space</span>
     </button>
   </div>
 

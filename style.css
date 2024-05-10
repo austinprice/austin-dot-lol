@@ -75,6 +75,9 @@ button {
   -moz-osx-font-smoothing: inherit;
   -webkit-appearance: none;
 }
+button:disabled {
+  cursor: not-allowed;
+}
 
 .btn-primary {
   background: var(--dark);
@@ -82,8 +85,28 @@ button {
   font-size: 1.1rem;
   padding: 0.75rem 1.5rem;
 }
-.btn-primary .key-helper {
+.btn-primary .key-helper, .btn-close .key-helper {
   background: hsla(22, 0%, 100%, 0.2)
+}
+
+.btn-info {
+  padding: 0.5rem 1.25rem;
+  position: relative;
+}
+.btn-info.highlight::before {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  left: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 7px;
+  height: 7px;
+  background: var(--color);
+  animation-name: blink;
+  animation-duration: 2s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
 }
 
 .btn-close {
@@ -92,9 +115,9 @@ button {
   padding: 0.5rem 1rem;
   width: auto;
   overflow: visible;
-  background: var(--light);
+  background: var(--dark);
   cursor: pointer;
-  color: var(--dark);
+  color: var(--light);
   font: inherit;
   line-height: normal;
   -webkit-font-smoothing: inherit;
@@ -103,7 +126,7 @@ button {
   transition: all 300ms ease-out;
 }
 .btn-close:hover {
-  background: var(--mid);
+  background: hsl(22, 0%, 20%);
 }
 
 .text-colored {
@@ -136,7 +159,6 @@ button {
 
 #snake-window {
   background-color: var(--window-bg);
-  /* border: 1px solid hsl(65, 10%, 8%); */
   border-radius: 4px;
   box-sizing: border-box;
   top: 10vh;
@@ -168,30 +190,13 @@ button {
 }
 
 .segment {
-  /* position: absolute;
-  min-width: 10px;
-  min-height: 10px; */
   background: var(--mid);
-  /* border: 2px solid var(--window-bg);
-  box-sizing: border-box;
-  border-radius: 50%; */
-  /* box-shadow: 0px 0px 4px hsla(140, 100%, 60%, 20%); */
 }
 
 .info-box {
-  /* position: absolute; */
   background: var(--color);
-  /* border-radius: 50%;
-  border: 2px solid var(--window-bg);
-  box-sizing: border-box; */
   cursor: pointer;
-  /* min-width: 10px;
-  min-height: 10px; */
-  /* box-shadow: 1px 1px 0px hsl(140, 77%, 56%); */
-  /* animation-duration: 3s;
-  animation-name: infoBox;
-  animation-iteration-count: infinite; */
-  transition: 1s ease-out;
+  transition: 300ms ease-out;
 }
 .info-box:hover {
   background: var(--color);
@@ -243,7 +248,7 @@ ul.info-list li p {
   margin: 0;
 }
 
-#pause-screen {
+.pause-screen {
   /* display: none; */
   position: absolute;
   top: 50%;
@@ -257,7 +262,7 @@ ul.info-list li p {
   transition: 300ms ease-out;
   z-index: 2;
 }
-#pause-screen.is-paused {
+.pause-screen.is-paused {
   opacity: 1;
   visibility: visible;
   z-index: 2;
@@ -289,30 +294,17 @@ ul.info-list li p {
 .hidden {
   opacity: 0;
 }
-/* #social:before{
-  content: '@';
-  position: absolute;
-  font-family: sans-serif;
-  color: hsl(140, 30%, 50%);
-  font-size: 1.5rem;
-  left: 50%;
-  top: 50%;
-  transform: translateX(-50%) translateY(-50%);
-} */
 
 
-@keyframes infoBox {
+@keyframes blink {
   0% {
     opacity: 0.3;
-    transform: scale(0.95);
   }
   50% {
     opacity: 1;
-    transform: scale(1.05);
   }
   100% {
     opacity: 0.3;
-    transform: scale(0.95);
   }
 }
 
